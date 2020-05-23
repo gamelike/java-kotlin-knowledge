@@ -11,6 +11,15 @@ public class QuickSorted {
         for (int i : arr) {
             System.out.print(i + " ");
         }
+        System.out.println();
+        int[] random = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            random[i] = (int) (Math.random() * 80000);
+        }
+        long start = System.currentTimeMillis();
+        quickSorted(random,0,random.length - 1); //19ms
+        long end = System.currentTimeMillis();
+        System.out.println(end - start + "ms");
     }
     public static void quickSorted(int[] arr,int start,int end){
         if(start < end){
