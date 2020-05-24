@@ -27,14 +27,16 @@ public class ShellSorted {
         int k,temp;
         while(gap >= 1) {
             for (int i = 0; i < gap; i++) {
-                k = i + 1;
-                temp = arr[k];
-                for (; k > 0; k--) {
-                    if (arr[k - 1] > temp)
-                        arr[k] = arr[k - 1];
-                    else break;
+                for (int j = i + gap; j < arr.length; j = j + gap) {
+                    temp = arr[j];
+                    for (; j > i; j = j - gap) {
+                        if (arr[j - gap] > temp) {
+                            arr[j] = arr[j - gap];
+                        }
+                        else break;
+                    }
+                    arr[j] = temp;
                 }
-                arr[k] = temp;
             }
             gap /= 2;
         }
