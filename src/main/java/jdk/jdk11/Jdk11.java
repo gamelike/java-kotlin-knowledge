@@ -16,6 +16,10 @@ public class Jdk11 {
      * <p>{@link Flow}</p>
      * <p>it's easy to change HTTP version from 1.1 to 2.0 or 2.0 to 1.1.
      * modules and package is named for {@link java.net.http}</p>
+     *
+     * <h1>ZGC</h1>
+     * <p> TODO understanding
+     * </p>
      */
 
     protected FunctionInterface varInfer() {
