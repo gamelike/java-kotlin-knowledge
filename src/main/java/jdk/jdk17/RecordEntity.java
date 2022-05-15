@@ -1,4 +1,4 @@
-package jdk17;
+package jdk.jdk17;
 
 /**
  * jdk 17 record entity.
