@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "application.infrastructure")
 @EntityScan(basePackages = "application.model.po")
 @SpringBootApplication
-@ComponentScan(basePackages = {"application"})
+@ComponentScan(basePackages = {"application","web"})
 public class BootstrapApplication {
     public static void main(String[] args) {
         SpringApplication.run(BootstrapApplication.class, args);
