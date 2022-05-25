@@ -1,0 +1,34 @@
+version: '1.0'
+name: compile
+displayName: compile
+triggers:
+  trigger: auto
+  push:
+    branches:
+      prefix:
+        - issue
+      precise:
+        - master
+stages:
+  - name: stage-8ae0e746
+    displayName: mvn compile
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@maven
+        name: build_maven
+        displayName: Maven 构建
+        jdkVersion: '17'
+        mavenVersion: 3.6.3
+        commands:
+          - mvn -B clean package -Dmaven.test.skip=true
+        artifacts:
+          - name: BUILD_ARTIFACT
+            path:
+              - ./target
+        settings: []
+permissions:
+  - role: admin
+    members:
+      - gamelike
