@@ -1,0 +1,5 @@
+{
+  "name":"Jackson",
+  "type":"json",
+  "source":"src/main/resources/init/Jackson.json"
+}
