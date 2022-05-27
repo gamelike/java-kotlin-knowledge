@@ -5,10 +5,12 @@ triggers:
   trigger: auto
   push:
     branches:
-      prefix:
-        - issue
       precise:
         - master
+  pr:
+    branches:
+      prefix:
+        - issue
 stages:
   - name: stage-8ae0e746
     displayName: mvn compile
