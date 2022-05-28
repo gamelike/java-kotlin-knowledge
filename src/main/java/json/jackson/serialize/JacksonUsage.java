@@ -1,9 +1,8 @@
-package json.jackson;
+package json.jackson.serialize;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import json.jackson.dto.JackSonExtend;
-import json.jackson.dto.MyBean;
-import json.jackson.dto.RawBean;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import json.jackson.serialize.dto.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -11,6 +10,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author violet.
@@ -73,6 +74,51 @@ public class JacksonUsage {
 
         Assert.assertTrue(value.contains("violet"));
         Assert.assertTrue(value.contains("jackson"));
+    }
+
+    @Test
+    @SneakyThrows
+    public void when_serializing_using_json_value(){
+        String enumAsString = new ObjectMapper()
+                .writeValueAsString(TypeEnumWithValue.TYPE1);
+
+        log.info("enumAsString: {}", enumAsString);
+        Assert.assertEquals("\"type1\"", enumAsString);
+    }
+
+    @Test
+    @SneakyThrows
+    public void when_serializing_using_json_root_name() {
+
+        User user = new User(1, "violet");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+
+        String result = mapper.writeValueAsString(user);
+
+        log.info("result: {}", result);
+
+        Assert.assertTrue(result.contains("\"user\":{\"id\":1,\"name\":\"violet\"}"));
+    }
+
+
+    @Test
+    @SneakyThrows
+    public void when_serializing_using_json_serialize(){
+        LocalDateTime localTime = LocalDateTime.now();
+
+        String date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                .format(localTime);
+
+        JsonSerializeDto dto = new JsonSerializeDto("violet", localTime);
+
+        String value = new ObjectMapper().writeValueAsString(dto);
+
+        log.info("value: {}", value);
+
+        Assert.assertTrue(value.contains(date));
     }
 
 }

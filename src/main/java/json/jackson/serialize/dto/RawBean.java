@@ -1,4 +1,4 @@
-package json.jackson.dto;
+package json.jackson.serialize.dto;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
