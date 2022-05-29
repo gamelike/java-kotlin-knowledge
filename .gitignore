@@ -5,3 +5,6 @@ out/
 ## file
 *.iml
 target/
+
+application.yaml
+application.properties
