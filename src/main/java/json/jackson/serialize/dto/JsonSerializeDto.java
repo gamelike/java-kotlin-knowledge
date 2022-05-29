@@ -1,7 +1,7 @@
 package json.jackson.serialize.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import json.jackson.serialize.customSerialization.CustomDataSerializer;
+import json.jackson.custom.serialize.CustomDataSerializer;
 
 import java.time.LocalDateTime;
 

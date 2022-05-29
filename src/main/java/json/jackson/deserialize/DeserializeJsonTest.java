@@ -1,14 +1,15 @@
 package json.jackson.deserialize;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import json.jackson.deserialize.dto.BeanAnyProperties;
-import json.jackson.deserialize.dto.BeanWithCreator;
-import json.jackson.deserialize.dto.BeanWithInject;
+import json.jackson.deserialize.dto.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author violet.
@@ -75,6 +76,43 @@ public class DeserializeJsonTest {
         Assert.assertEquals("violet", bean.getName());
         Assert.assertEquals("attr", bean.getProperties().get("attr"));
         Assert.assertEquals(1, bean.getProperties().get("id"));
+    }
+
+    @Test
+    @SneakyThrows
+    public void when_deserialize_using_custom_deserialize() {
+        String json = """
+                {
+                "id": 1,
+                "name": "violet",
+                "date": "2021-05-29 13:39:00"
+                }
+                """;
+
+        BeanWithDeserialize bean = new ObjectMapper()
+                .readerFor(BeanWithDeserialize.class)
+                .readValue(json);
+
+        Assert.assertEquals("2021-05-29 13:39:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                .format(bean.getDate()));
+    }
+
+    @Test
+    @SneakyThrows
+    public void when_deserialize_using_json_alias() {
+        String json = """
+                {
+                "fName": "violet",
+                "lastName": "Evergarden"
+                }
+               """;
+
+        BeanWithJsonAlias bean = new ObjectMapper()
+                .readerFor(BeanWithJsonAlias.class)
+                .readValue(json);
+
+        Assert.assertEquals("violet", bean.firstName());
+        Assert.assertEquals("Evergarden", bean.lastName());
     }
 
 }

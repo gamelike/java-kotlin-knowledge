@@ -20,6 +20,8 @@ public class FruitController {
     try {
       Fruit fruit = FruitResolve.loadProperty(Fruit.class);
       fruit.setType(Fruit.FruitType.APPLE);
+      // BEAN Property Writer 修改序列化后的值
+      // find serializer to use
       return fruit;
     } catch (Exception e) {
       throw new RuntimeException(e);
