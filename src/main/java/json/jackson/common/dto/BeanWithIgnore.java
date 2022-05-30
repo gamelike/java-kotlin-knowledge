@@ -1,5 +1,6 @@
 package json.jackson.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -8,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"id"})
 public record BeanWithIgnore(
         Integer id,
-        String name
+        String name,
+        @JsonIgnore String description
 ) {
     @Override
     public Integer id() {
