@@ -19,8 +19,10 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@FilterDef(name = "filter", parameters = @ParamDef(name = "filterName",type = "string"))
-@Filter(name = "filter", condition = "username = :filterName")
+@FilterDef(name = "filter",
+        parameters = @ParamDef(name = "username",type = "string"))
+@Filter(name = "filter",
+        condition = "username = :username")
 public class User {
 
     @Id

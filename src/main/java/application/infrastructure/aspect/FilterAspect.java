@@ -4,8 +4,6 @@ import application.infrastructure.annotation.EnableFilter;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
@@ -26,11 +24,13 @@ public class FilterAspect {
 
     @Around("@annotation(application.infrastructure.annotation.EnableFilter)")
     public Object doBefore(ProceedingJoinPoint joinPoint) throws Throwable {
-        Filter filter = entityManager.unwrap(Session.class).enableFilter("filter");
+        Session session = entityManager.unwrap(Session.class);
         EnableFilter annotation = joinPoint.getClass().getAnnotation(EnableFilter.class);
-        for (Field field : annotation.getClass().getFields()) {
-            filter.setParameter("filterName", field.get(annotation));
-        }
+        Class<? extends EnableFilter> aClass = annotation.getClass();
+        Field name = aClass.getField("filterName");
+        Filter filter = session.enableFilter(name.get(annotation).toString());
+        filter.setParameter(aClass.getField("name").get(annotation).toString(),
+                aClass.getField("value").get(annotation));
         return joinPoint.proceed();
     }
 

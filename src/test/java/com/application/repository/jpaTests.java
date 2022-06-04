@@ -94,13 +94,9 @@ public class jpaTests {
     }
 
     @Test
-    public void filter_query() {
-        test();
-        select();
-    }
-
     @Transactional
-    public void test() {
+    @EnableFilter(name = "username",value = "test")
+    public void filter_query() {
         User user = new User();
         user.setUsername("test");
         userRepository.save(user);
@@ -109,20 +105,20 @@ public class jpaTests {
         Assert.assertEquals(1, users.size());
 
         User user2 = new User();
-        user2.setUsername("test2");
+        user2.setUsername("abc");
         userRepository.save(user2);
 
+        Session session = entityManager.unwrap(Session.class);
+        Filter filter = session.enableFilter("filter");
+        filter.setParameter("username", "test");
+        List<User> list = session.createQuery("from User", User.class)
+                .getResultList();
+        log.info("{}", list);
+        session.disableFilter("filter");
+        Assert.assertEquals(1, list.size());
+        List<User> all = userRepository.findAll();
 
-    }
-
-    @Transactional
-    @EnableFilter(value = "test")
-    public void select() {
-        Filter filter = entityManager.unwrap(Session.class).enableFilter("filter");
-        filter.setParameter("filterName", "test");
-        List<User> users2 = userRepository.findAll();
-        Assert.assertEquals(1, users2.size());
-        entityManager.unwrap(Session.class).disableFilter("filter");
+        Assert.assertEquals(2, all.size());
     }
 
 }
