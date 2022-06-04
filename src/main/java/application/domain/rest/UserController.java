@@ -1,12 +1,11 @@
 package application.domain.rest;
 
 import application.domain.rest.dto.User;
-import application.domain.service.LoginService;
+import application.domain.service.AlphaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author violet.
@@ -16,19 +15,29 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
 
-    private final LoginService loginService;
+    private final AlphaService alphaService;
 
-    public UserController(LoginService loginService) {
-        this.loginService = loginService;
+    public UserController(AlphaService alphaService) {
+        this.alphaService = alphaService;
     }
 
     @RequestMapping(path = "login",method = RequestMethod.POST)
     public String login(@RequestBody User user){
         log.info("user:{}",user);
-        String result = loginService.login(user.username(), user.password());
-        return result;
+        return alphaService.login(user.username(), user.password());
     }
 
+    @PutMapping("insert")
+    @SneakyThrows
+    public String saveUser(@RequestBody application.model.po.User user){
+        log.info("user:{}",user);
+        return new ObjectMapper().writeValueAsString(alphaService.save(user));
+    }
 
+    @GetMapping("getAll")
+    @SneakyThrows
+    public String getAll(){
+        return new ObjectMapper().writeValueAsString(alphaService.aspect());
+    }
 
 }

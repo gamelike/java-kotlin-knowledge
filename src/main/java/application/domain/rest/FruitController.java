@@ -1,4 +1,4 @@
-package web.controller;
+package application.domain.rest;
 
 import annotation.demo.Fruit;
 import annotation.demo.FruitResolve;
