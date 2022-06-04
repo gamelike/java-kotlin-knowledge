@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 /**
  * @author gjd
  */
-@Configuration
+//@Configuration
 public class JacksonConfig {
 
   @Primary
