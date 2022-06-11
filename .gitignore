@@ -8,3 +8,5 @@ target/
 
 application.yaml
 application.properties
+application-*.yaml
+application-*.properties
