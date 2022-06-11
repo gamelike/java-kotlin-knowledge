@@ -1,0 +1,1 @@
+insert into history(title, type) values ('test1', 1);
