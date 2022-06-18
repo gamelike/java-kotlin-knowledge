@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 package leetcode
 
 import leetcode.Day20220618 as Day202206181
@@ -31,17 +33,17 @@ class Day20220618 {
             next = next.next
         }
         if (cur == null || next == null) {
-            return head;
+            return head
         }
         cur.next = Node(insertVal)
-        cur.next?.next = next;
-        return head;
+        cur.next?.next = next
+        return head
     }
 }
 
 fun main() {
     val cur = Day202206181()
-    val root = Node(3);
+    val root = Node(3)
     root.next = Node(5)
     root.next?.next = Node(1)
     root.next?.next?.next = root
