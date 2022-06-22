@@ -1,0 +1,76 @@
+﻿{
+  "order": 0,
+  "index_patterns": [
+    "judge-history*"
+  ],
+  "index": {
+    "number_of_shards": "3",
+    "number_of_replicas": "0",
+    "refresh_interval": "10s"
+  },
+  "mappings": {
+    "properties": {
+      "alarm_indexing_id": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "auto": {
+        "type": "integer"
+      },
+      "createTime": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss"
+      },
+      "desc": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "evidenceType": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "id": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "proce": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "result": {
+        "type": "integer"
+      },
+      "score": {
+        "type": "double"
+      },
+      "type": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}
