@@ -7,36 +7,23 @@ import application.model.constant.HistoryType;
 import application.model.po.Book;
 import application.model.po.History;
 import application.model.po.User;
-import com.annotation.BaseTest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
 import org.hibernate.Filter;
 import org.hibernate.Session;
-import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.util.BeanDefinitionUtils;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.jpa.EntityManagerHolder;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.config.JtaTransactionManagerFactoryBean;
-import org.springframework.transaction.support.TransactionTemplate;
 import web.BootstrapApplication;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transaction;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author violet.
