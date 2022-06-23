@@ -1,9 +1,16 @@
 package json.jackson.serialize;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import json.jackson.custom.serialize.CustomDataSerializer;
 import json.jackson.serialize.dto.*;
+import lombok.Data;
 import lombok.SneakyThrows;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -78,7 +85,7 @@ public class JacksonUsage {
 
     @Test
     @SneakyThrows
-    public void when_serializing_using_json_value(){
+    public void when_serializing_using_json_value() {
         String enumAsString = new ObjectMapper()
                 .writeValueAsString(TypeEnumWithValue.TYPE1);
 
@@ -106,7 +113,7 @@ public class JacksonUsage {
 
     @Test
     @SneakyThrows
-    public void when_serializing_using_json_serialize(){
+    public void when_serializing_using_json_serialize() {
         LocalDateTime localTime = LocalDateTime.now();
 
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -119,6 +126,34 @@ public class JacksonUsage {
         log.info("value: {}", value);
 
         Assert.assertTrue(value.contains(date));
+    }
+
+    @Data
+    @Accessors(chain = true)
+    static class History {
+
+        @JsonProperty(value = "evidence_type")
+        private String evidenceType;
+
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+        @JsonProperty(value = "create_time")
+        @JsonSerialize(using = CustomDataSerializer.class)
+        private LocalDateTime createTime;
+
+    }
+
+    @Test
+    @SneakyThrows
+    public void serialize_un_convert() {
+
+        History history = new History().setEvidenceType("aa")
+                .setCreateTime(LocalDateTime.now());
+
+        String str = new ObjectMapper()
+                .writeValueAsString(history);
+
+        log.info("{}", str);
+
     }
 
 }
