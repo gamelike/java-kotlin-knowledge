@@ -12,10 +12,20 @@ on:
 jobs:
   build:
 
-    runs-on: [self-hosted , ubuntu-latest, macos-latest]
+    runs-on: [ ubuntu-latest ]
 
     steps:
-    - name: private
-      uses: gamelike/java-kotlin-knowledge@master
-    - name: Build with Maven
-      run: mvn -B clean package --file pom.xml
+      - name: checkout
+        uses: gamelike/java-kotlin-knowledge@master
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: bash
+        shell: bash
+        run: |
+          ls -al
+      - name: maven build
+        run: mvn clean package

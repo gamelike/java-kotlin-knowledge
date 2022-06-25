@@ -1,0 +1,9 @@
+name: compile and validation
+author: gamelike
+description: validation runtime exception
+runs:
+  using: composite
+  steps:
+    - run: echo this event is a pull request and unassigned.
+      shell: bash
+      if: ${{ github.event_name == 'pull_request' && github.event.action == 'unassigned' }}
