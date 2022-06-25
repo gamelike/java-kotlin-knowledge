@@ -1,4 +1,4 @@
-package web.elasticsearch;
+package web.elasticsearch.version7;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +11,12 @@ import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.histogram.ExtendedBounds;
-import web.connection.elasticsearch.Config;
+import web.elasticsearch.version7.connection.Config;
 import web.utils.DateUtils;
 import web.utils.EsUtils;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * @author violet.

@@ -1,4 +1,4 @@
-package web.connection.elasticsearch;
+package web.elasticsearch.version7.connection;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;

@@ -1,4 +1,4 @@
-package web.elasticsearch;
+package web.elasticsearch.version7;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Assert;
-import web.connection.elasticsearch.Config;
+import web.elasticsearch.version7.connection.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;

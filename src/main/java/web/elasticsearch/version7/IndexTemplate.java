@@ -1,23 +1,17 @@
-package web.elasticsearch;
+package web.elasticsearch.version7;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.flink.core.fs.Path;
-import org.apache.flink.shaded.netty4.io.netty.util.internal.ResourcesUtil;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.PutIndexTemplateRequest;
-import org.h2.index.Index;
-import web.connection.elasticsearch.Config;
+import web.elasticsearch.version7.connection.Config;
 import web.elasticsearch.model.dto.TemplateEngine;
 
 import java.io.File;
-import java.net.URI;
 import java.nio.file.Paths;
-import java.util.Map;
 
 /**
  * @author violet
