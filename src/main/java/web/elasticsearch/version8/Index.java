@@ -49,6 +49,8 @@ public class Index {
                 log.info("history exists");
             }
         });
+
+        Config.closeTransport();
     }
 
     public void listAndMaps(ElasticsearchClient client) {

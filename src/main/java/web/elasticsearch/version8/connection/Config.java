@@ -5,6 +5,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
+import lombok.SneakyThrows;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 
@@ -25,6 +26,11 @@ public class Config {
 
     public static ElasticsearchAsyncClient elasticsearchAsyncClient() {
         return new ElasticsearchAsyncClient(transport);
+    }
+
+    @SneakyThrows
+    public static void closeTransport() {
+        transport.close();
     }
 
     /////////////////////////////
