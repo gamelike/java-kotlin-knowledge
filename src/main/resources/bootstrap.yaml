@@ -1,0 +1,5 @@
+## docker pull zookeeper latest
+spring:
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
