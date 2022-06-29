@@ -14,7 +14,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring.boot.version>2.7.1</spring.boot.version>
         <elasticsearch.version>6.8.22</elasticsearch.version>
-        <springcloud.version>2021.0.1</springcloud.version>
+        <springcloud.version>2021.0.3</springcloud.version>
         <kotlin.version>1.7.0</kotlin.version>
     </properties>
 
