@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.slideWindows;
 
 import java.util.LinkedHashMap;
 
