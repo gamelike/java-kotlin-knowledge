@@ -1,7 +1,5 @@
 package leetcode.structure;
 
-import org.junit.Test;
-
 /**
  * leetcode 676. 前缀树匹配问题.
  *
