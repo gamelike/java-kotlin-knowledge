@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.day;
 
 import java.util.Comparator;
 import java.util.TreeSet;

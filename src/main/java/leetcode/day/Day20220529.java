@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.day;
 
 import org.junit.Assert;
 import org.junit.Test;
