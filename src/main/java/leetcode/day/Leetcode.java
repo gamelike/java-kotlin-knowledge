@@ -1,0 +1,43 @@
+package leetcode.day;
+
+import leetcode.structure.dataStructure.Node;
+
+/**
+ * @author violet
+ */
+public class Leetcode {
+
+    /**
+     * 分治思想 leetcode 558 <a href="https://leetcode.cn/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/">四叉树交集</a>
+     *
+     * @param quadTree1 四叉树 1
+     * @param quadTree2 四叉树 2
+     * @return {@link Node}
+     */
+    public Node intersect(Node quadTree1, Node quadTree2) {
+        // 递归结束点
+        if (quadTree1.isLeaf) {
+            // 构建数无子树 | 右子树 永远一
+            if (quadTree1.val) {
+                return new Node(true, true, null, null, null, null);
+            }
+            // 其他情况 直接使用右子树的节点
+            return new Node(quadTree2.val, quadTree2.isLeaf, quadTree2.topLeft, quadTree2.topRight, quadTree2.bottomLeft, quadTree2.bottomRight);
+        }
+        // 左子树没结束，右子树结束，递归
+        if (quadTree2.isLeaf) {
+            return intersect(quadTree2, quadTree1);
+        }
+        // 四叉树递归
+        Node o1 = intersect(quadTree1.topLeft, quadTree2.topLeft);
+        Node o2 = intersect(quadTree1.topRight, quadTree2.topRight);
+        Node o3 = intersect(quadTree1.bottomLeft, quadTree2.bottomLeft);
+        Node o4 = intersect(quadTree1.bottomRight, quadTree2.bottomRight);
+        // 子树全为一,则递归到父树变更叶子节点
+        if (o1.isLeaf && o2.isLeaf && o3.isLeaf && o4.isLeaf && o1.val == o2.val && o1.val == o3.val && o1.val == o4.val) {
+            return new Node(o1.val, true, null, null, null, null);
+        }
+        // 返回根节点
+        return new Node(false, false, o1, o2, o3, o4);
+    }
+}
