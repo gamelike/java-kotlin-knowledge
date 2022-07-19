@@ -4,10 +4,16 @@ import leetcode.structure.dataStructure.Node;
 
 import java.util.*;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author violet
  */
-@SuppressWarnings("all") public class Leetcode {
+@SuppressWarnings("all")
+public class Leetcode {
 
     /**
      * 分治思想 leetcode 558 <a href="https://leetcode.cn/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/">四叉树交集</a>
@@ -136,6 +142,36 @@ import java.util.*;
          */
         public int getHash(int x, int y) {
             return (x << 16) ^ y;
+        }
+    }
+
+    /**
+     * 日常安排,模拟 (可以使用线段树 TODO 不会 :( 待学习
+     * <br/>
+     * <a href="https://leetcode.cn/problems/my-calendar-ii/">线段树练习题</a>
+     */
+    class MyCalendarTwo {
+        List<int[]> booked;
+        List<int[]> overlaps;
+
+        public MyCalendarTwo() {
+            booked = new ArrayList<>();
+            overlaps = new ArrayList<>();
+        }
+
+        public boolean book(int start, int end) {
+            for (int[] overlap : overlaps) {
+                if (overlap[0] < end && overlap[1] > start) {
+                    return false;
+                }
+            }
+            for (int[] book : booked) {
+                if (book[0] < end && book[1] > start) {
+                    overlaps.add(new int[]{Math.max(book[0], start), Math.min(book[1], end)});
+                }
+            }
+            booked.add(new int[]{start, end});
+            return true;
         }
     }
 }
