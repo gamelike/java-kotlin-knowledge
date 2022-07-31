@@ -16,6 +16,7 @@
         <elasticsearch.version>6.8.22</elasticsearch.version>
         <springcloud.version>2021.0.3</springcloud.version>
         <kotlin.version>1.7.0</kotlin.version>
+        <kafka.version>3.0.0</kafka.version>
     </properties>
 
     <dependencyManagement>
@@ -212,6 +213,18 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
+        </dependency>
+
+        <!--kafka 客户端-->
+        <dependency>
+          <groupId>org.apache.kafka</groupId>
+          <artifactId>kafka-clients</artifactId>
+          <version>${kafka.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
         </dependency>
 
     </dependencies>
