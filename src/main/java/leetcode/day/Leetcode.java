@@ -1,12 +1,16 @@
 package leetcode.day;
 
+import leetcode.TreeNode;
+import leetcode.chainTable.LC203;
+import leetcode.structure.dataStructure.ListNode;
 import leetcode.structure.dataStructure.Node;
+import org.apache.poi.ss.formula.functions.T;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
 import java.util.*;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -49,6 +53,10 @@ public class Leetcode {
         return new Node(false, false, o1, o2, o3, o4);
     }
 
+    /**
+     * 病毒问题 leetcode 749 <br/>
+     * <a href="https://leetcode.cn/problems/contain-virus/">病毒防火墙</a>
+     */
     class Virus {
         static int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
@@ -174,4 +182,149 @@ public class Leetcode {
             return true;
         }
     }
+
+    /**
+     * 贪心 & sort <br/>
+     * <a href="https://leetcode.cn/problems/set-intersection-size-at-least-two"> 设置交集最小为2 </a>
+     *
+     * @param intervals 连续的数组
+     * @return 最小集合
+     */
+    public int intersectionSizeTwo(int[][] intervals) {
+        int n = intervals.length;
+        int ans = 0, m = 2;
+        Arrays.sort(intervals, ((o1, o2) -> o1[0] == o2[0] ? o2[1] - o1[1] : o1[0] - o2[0]));
+
+        List<Integer>[] tem = new List[n];
+
+        for (int i = 0; i < n; i++) {
+            tem[i] = new ArrayList<>();
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = intervals[i][0], k = tem[i].size(); k < m; k++, j++) {
+                ans++;
+                help(intervals, tem, i - 1, j);
+            }
+        }
+
+        return ans;
+    }
+
+    private void help(int[][] intervals, List<Integer>[] tem, int pos, int num) {
+        for (int i = pos; i >= 0; i--) {
+            if (intervals[i][1] < num) {
+                break;
+            }
+            tem[i].add(num);
+        }
+    }
+
+    static class CBTInserter {
+
+        TreeNode root;
+        Queue<TreeNode> queue;
+
+        public CBTInserter(TreeNode root) {
+            this.root = root;
+            queue = new ArrayDeque<>();
+            queue.offer(root);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                TreeNode cur = queue.peek();
+                if (cur.getLeft() == null) break;
+                queue.offer(cur.getLeft());
+                if (cur.getRight() == null) break;
+                queue.offer(cur.getRight());
+                queue.poll();
+            }
+        }
+
+        public int insert(int val) {
+            TreeNode cur = queue.peek();
+            TreeNode node = new TreeNode(val);
+            if (cur.getLeft() == null) {
+                cur.setLeft(node);
+                queue.offer(node);
+            }
+            if (cur.getRight() == null) {
+                cur.setRight(node);
+                queue.poll();
+                queue.offer(node);
+            }
+            return cur.getVal();
+        }
+
+        public TreeNode get_root() {
+            return root;
+        }
+
+    }
+
+    static class Palindrome {
+        public boolean isPalindrome(ListNode head) {
+            int[] num = new int[10];
+
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast.next != null && fast.next.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            ListNode curr = slow.next;
+            ListNode pre = null;
+            while (curr != null) {
+                ListNode next = curr.next;
+                curr.next = pre;
+                pre = curr;
+                curr = next;
+            }
+            ListNode cur = head;
+            while (pre != null) {
+                if (pre.val != cur.val) {
+                    return false;
+                }
+                pre = pre.next;
+                cur = cur.next;
+            }
+            return true;
+        }
+
+
+    }
+
+    @Test
+    public void test111() {
+        ListNode head = new ListNode(1);
+        ListNode two = new ListNode(2);
+        head.next = two;
+        ListNode three = new ListNode(2);
+        two.next = three;
+        ListNode four = new ListNode(1);
+        three.next = four;
+        Palindrome palindrome = new Palindrome();
+        System.out.println(palindrome.isPalindrome(head));
+    }
+
+    @Test
+    public void test() {
+        TreeNode root = new TreeNode(1);
+        TreeNode t2 = new TreeNode(2);
+        TreeNode t3 = new TreeNode(3);
+        TreeNode t4 = new TreeNode(4);
+        TreeNode t5 = new TreeNode(5);
+        TreeNode t6 = new TreeNode(6);
+        root.setLeft(t2);
+        root.setRight(t3);
+        t2.setLeft(t4);
+        t2.setRight(t5);
+        t3.setLeft(t6);
+        CBTInserter cbtInserter = new CBTInserter(root);
+        System.out.println(cbtInserter.insert(6));
+        System.out.println(cbtInserter.insert(7));
+        System.out.println(cbtInserter.get_root());
+
+        List<Integer> list = List.of(1, 2, 3, 4);
+    }
+
 }
