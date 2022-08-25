@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * Redis ÖĞÌøÔ¾±í½á¹¹  leetcode 1206 <br/>
- * <a href="https://leetcode.cn/problems/design-skiplist/">ÌøÔ¾±íÌâÄ¿</a>
+ * Redis ä¸­è·³è·ƒè¡¨ç»“æ„  leetcode 1206 <br/>
+ * <a href="https://leetcode.cn/problems/design-skiplist/">è·³è·ƒè¡¨é¢˜ç›®</a>
  *
  * @author violet
  */
@@ -60,7 +60,7 @@ public class Skiplist {
         int lv = randomLevel();
         level = Math.max(level, lv);
         ListNode newNode = new ListNode(num, lv);
-        // ÖØÅÅÇ°Ïò½Úµã
+        // é‡æ’å‰å‘èŠ‚ç‚¹
         for (int i = 0; i < lv; i++) {
             // update the {i} layers
             newNode.next[i] = updateNode[i].next[i];

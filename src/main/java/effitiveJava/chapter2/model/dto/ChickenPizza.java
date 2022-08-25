@@ -2,6 +2,8 @@ package effitiveJava.chapter2.model.dto;
 
 import lombok.Getter;
 
+import java.util.Objects;
+
 /**
  * abstract class impl.
  */
@@ -20,7 +22,7 @@ public class ChickenPizza extends Pizza{
         private final Size size;
 
         public Builder(Size size) {
-            this.size = size;
+            this.size = Objects.requireNonNull(size);
         }
 
         @Override

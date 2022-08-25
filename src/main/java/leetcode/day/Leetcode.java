@@ -1,17 +1,11 @@
 package leetcode.day;
 
 import leetcode.TreeNode;
-import leetcode.chainTable.LC203;
 import leetcode.structure.dataStructure.ListNode;
 import leetcode.structure.dataStructure.Node;
-import org.apache.poi.ss.formula.functions.T;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author violet
@@ -20,42 +14,42 @@ import java.util.Set;
 public class Leetcode {
 
     /**
-     * ·ÖÖÎË¼Ïë leetcode 558 <a href="https://leetcode.cn/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/">ËÄ²æÊ÷½»¼¯</a>
+     * åˆ†æ²»æ€æƒ³ leetcode 558 <a href="https://leetcode.cn/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/">å››å‰æ ‘äº¤é›†</a>
      *
-     * @param quadTree1 ËÄ²æÊ÷ 1
-     * @param quadTree2 ËÄ²æÊ÷ 2
+     * @param quadTree1 å››å‰æ ‘ 1
+     * @param quadTree2 å››å‰æ ‘ 2
      * @return {@link Node}
      */
     public Node intersect(Node quadTree1, Node quadTree2) {
-        // µİ¹é½áÊøµã
+        // é€’å½’ç»“æŸç‚¹
         if (quadTree1.isLeaf) {
-            // ¹¹½¨ÊıÎŞ×ÓÊ÷ | ÓÒ×ÓÊ÷ ÓÀÔ¶Ò»
+            // æ„å»ºæ•°æ— å­æ ‘ | å³å­æ ‘ æ°¸è¿œä¸€
             if (quadTree1.val) {
                 return new Node(true, true, null, null, null, null);
             }
-            // ÆäËûÇé¿ö Ö±½ÓÊ¹ÓÃÓÒ×ÓÊ÷µÄ½Úµã
+            // å…¶ä»–æƒ…å†µ ç›´æ¥ä½¿ç”¨å³å­æ ‘çš„èŠ‚ç‚¹
             return new Node(quadTree2.val, quadTree2.isLeaf, quadTree2.topLeft, quadTree2.topRight, quadTree2.bottomLeft, quadTree2.bottomRight);
         }
-        // ×ó×ÓÊ÷Ã»½áÊø£¬ÓÒ×ÓÊ÷½áÊø£¬µİ¹é
+        // å·¦å­æ ‘æ²¡ç»“æŸï¼Œå³å­æ ‘ç»“æŸï¼Œé€’å½’
         if (quadTree2.isLeaf) {
             return intersect(quadTree2, quadTree1);
         }
-        // ËÄ²æÊ÷µİ¹é
+        // å››å‰æ ‘é€’å½’
         Node o1 = intersect(quadTree1.topLeft, quadTree2.topLeft);
         Node o2 = intersect(quadTree1.topRight, quadTree2.topRight);
         Node o3 = intersect(quadTree1.bottomLeft, quadTree2.bottomLeft);
         Node o4 = intersect(quadTree1.bottomRight, quadTree2.bottomRight);
-        // ×ÓÊ÷È«ÎªÒ»,Ôòµİ¹éµ½¸¸Ê÷±ä¸üÒ¶×Ó½Úµã
+        // å­æ ‘å…¨ä¸ºä¸€,åˆ™é€’å½’åˆ°çˆ¶æ ‘å˜æ›´å¶å­èŠ‚ç‚¹
         if (o1.isLeaf && o2.isLeaf && o3.isLeaf && o4.isLeaf && o1.val == o2.val && o1.val == o3.val && o1.val == o4.val) {
             return new Node(o1.val, true, null, null, null, null);
         }
-        // ·µ»Ø¸ù½Úµã
+        // è¿”å›æ ¹èŠ‚ç‚¹
         return new Node(false, false, o1, o2, o3, o4);
     }
 
     /**
-     * ²¡¶¾ÎÊÌâ leetcode 749 <br/>
-     * <a href="https://leetcode.cn/problems/contain-virus/">²¡¶¾·À»ğÇ½</a>
+     * ç—…æ¯’é—®é¢˜ leetcode 749 <br/>
+     * <a href="https://leetcode.cn/problems/contain-virus/">ç—…æ¯’é˜²ç«å¢™</a>
      */
     class Virus {
         static int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
@@ -64,8 +58,8 @@ public class Leetcode {
             int m = isInfected.length, n = isInfected[0].length;
             int ans = 0;
             while (true) {
-                List<Set<Integer>> neighbors = new ArrayList<>(); // ÁÚ½Óµã
-                List<Integer> firewalls = new ArrayList<>(); // ·À»ğÇ½ÊıÁ¿
+                List<Set<Integer>> neighbors = new ArrayList<>(); // é‚»æ¥ç‚¹
+                List<Integer> firewalls = new ArrayList<>(); // é˜²ç«å¢™æ•°é‡
                 for (int i = 0; i < m; ++i) {
                     for (int j = 0; j < n; ++j) {
                         if (isInfected[i][j] == 1) {
@@ -74,25 +68,25 @@ public class Leetcode {
                             Set<Integer> neighbor = new HashSet<>();
                             int firewall = 0, idx = neighbors.size() + 1;
                             isInfected[i][j] = -idx;
-                            // BFS ±éÀúÇøÓò¸ĞÈ¾µÄÇøÓò¿é
+                            // BFS éå†åŒºåŸŸæ„ŸæŸ“çš„åŒºåŸŸå—
                             while (!queue.isEmpty()) {
                                 int[] arr = queue.poll();
                                 int x = arr[0], y = arr[1];
-                                // À©É¢
+                                // æ‰©æ•£
                                 for (int d = 0; d < 4; ++d) {
                                     int nx = x + dirs[d][0], ny = y + dirs[d][1];
                                     if (nx >= 0 && nx < m && ny >= 0 && ny < n) {
-                                        if (isInfected[nx][ny] == 1) { // ÒÑ¾­ÊÇ²¡¶¾
+                                        if (isInfected[nx][ny] == 1) { // å·²ç»æ˜¯ç—…æ¯’
                                             queue.offer(new int[]{nx, ny});
                                             isInfected[nx][ny] = -idx;
-                                        } else if (isInfected[nx][ny] == 0) { // ·Ç²¡¶¾
+                                        } else if (isInfected[nx][ny] == 0) { // éç—…æ¯’
                                             ++firewall;
                                             neighbor.add(getHash(nx, ny));
                                         }
                                     }
                                 }
                             }
-                            // ÇøÓò¶ÔÓ¦µÄ·À»ğÇ½ĞèÒª°²×°¸öÊı
+                            // åŒºåŸŸå¯¹åº”çš„é˜²ç«å¢™éœ€è¦å®‰è£…ä¸ªæ•°
                             neighbors.add(neighbor);
                             firewalls.add(firewall);
                         }
@@ -103,16 +97,16 @@ public class Leetcode {
                     break;
                 }
 
-                // ÕÒµ½×î´óµÄ²¡¶¾ÇøÓò
+                // æ‰¾åˆ°æœ€å¤§çš„ç—…æ¯’åŒºåŸŸ
                 int idx = 0;
                 for (int i = 1; i < neighbors.size(); ++i) {
                     if (neighbors.get(i).size() > neighbors.get(idx).size()) {
                         idx = i;
                     }
                 }
-                // ¼ÓÉÏ×î´óÇøÓòËùĞè·À»ğÇ½
+                // åŠ ä¸Šæœ€å¤§åŒºåŸŸæ‰€éœ€é˜²ç«å¢™
                 ans += firewalls.get(idx);
-                // »Ö¸´¾ØÕó
+                // æ¢å¤çŸ©é˜µ
                 for (int i = 0; i < m; ++i) {
                     for (int j = 0; j < n; ++j) {
                         if (isInfected[i][j] < 0) {
@@ -124,7 +118,7 @@ public class Leetcode {
                         }
                     }
                 }
-                // ³ıÁË¼ÓÉÏ·À»ğÇ½µÄ£¬ÆäÓàÉèÖÃ±»¸ĞÈ¾
+                // é™¤äº†åŠ ä¸Šé˜²ç«å¢™çš„ï¼Œå…¶ä½™è®¾ç½®è¢«æ„ŸæŸ“
                 for (int i = 0; i < neighbors.size(); ++i) {
                     if (i != idx) {
                         for (int val : neighbors.get(i)) {
@@ -133,7 +127,7 @@ public class Leetcode {
                         }
                     }
                 }
-                // ´ı¸ĞÈ¾ÇøÒÑ¾­±»¸ôÀë,Ìø³öÑ­»·
+                // å¾…æ„ŸæŸ“åŒºå·²ç»è¢«éš”ç¦»,è·³å‡ºå¾ªç¯
                 if (neighbors.size() == 1) {
                     break;
                 }
@@ -142,11 +136,11 @@ public class Leetcode {
         }
 
         /**
-         * ½«¶şÎ¬³éÏóÎªÒ»Î¬£¬±£´æ×ø±êÏµ
+         * å°†äºŒç»´æŠ½è±¡ä¸ºä¸€ç»´ï¼Œä¿å­˜åæ ‡ç³»
          *
-         * @param x ºáÖá
-         * @param y ×İÖá
-         * @return calc ¸ß 16 Î» Óë µÍ 16 Î»ÓëÔËËã.
+         * @param x æ¨ªè½´
+         * @param y çºµè½´
+         * @return calc é«˜ 16 ä½ ä¸ ä½ 16 ä½ä¸è¿ç®—.
          */
         public int getHash(int x, int y) {
             return (x << 16) ^ y;
@@ -154,9 +148,9 @@ public class Leetcode {
     }
 
     /**
-     * ÈÕ³£°²ÅÅ,Ä£Äâ (¿ÉÒÔÊ¹ÓÃÏß¶ÎÊ÷ TODO ²»»á :( ´ıÑ§Ï°
+     * æ—¥å¸¸å®‰æ’,æ¨¡æ‹Ÿ (å¯ä»¥ä½¿ç”¨çº¿æ®µæ ‘ TODO ä¸ä¼š :( å¾…å­¦ä¹ 
      * <br/>
-     * <a href="https://leetcode.cn/problems/my-calendar-ii/">Ïß¶ÎÊ÷Á·Ï°Ìâ</a>
+     * <a href="https://leetcode.cn/problems/my-calendar-ii/">çº¿æ®µæ ‘ç»ƒä¹ é¢˜</a>
      */
     class MyCalendarTwo {
         List<int[]> booked;
@@ -184,11 +178,11 @@ public class Leetcode {
     }
 
     /**
-     * Ì°ĞÄ & sort <br/>
-     * <a href="https://leetcode.cn/problems/set-intersection-size-at-least-two"> ÉèÖÃ½»¼¯×îĞ¡Îª2 </a>
+     * è´ªå¿ƒ & sort <br/>
+     * <a href="https://leetcode.cn/problems/set-intersection-size-at-least-two"> è®¾ç½®äº¤é›†æœ€å°ä¸º2 </a>
      *
-     * @param intervals Á¬ĞøµÄÊı×é
-     * @return ×îĞ¡¼¯ºÏ
+     * @param intervals è¿ç»­çš„æ•°ç»„
+     * @return æœ€å°é›†åˆ
      */
     public int intersectionSizeTwo(int[][] intervals) {
         int n = intervals.length;

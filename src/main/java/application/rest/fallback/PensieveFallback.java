@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class PensieveFallback implements PensieveService {
     @Override
     public String getDataBaseMessage(String databaseType, String typesAliasName) {
-        log.info("ÈÛ¶Ï´¥·¢");
+        log.info("ç†”æ–­è§¦å‘");
         return null;
     }
 }

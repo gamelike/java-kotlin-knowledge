@@ -8,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -105,6 +103,60 @@ public class ThreadTest {
         thread2.start();
         thread2.join();
         log.info("complete");
+
+    }
+
+    @Test
+    public void test_thread_exception() {
+        try {
+            new Thread(() -> {
+                throw new RuntimeException("线程异常");
+            }).start();
+        } catch (RuntimeException e) {
+            log.info("main thread catch");
+        }
+        log.info("complete");
+
+        int count = 0;
+        try {
+            FutureTask<Integer> futureTask = new FutureTask<>(() -> {
+                throw new RuntimeException("callable exception");
+            });
+            futureTask.run();
+            count = futureTask.get();
+        } catch (RuntimeException e) {
+            log.info("callable catch");
+        } catch (ExecutionException | InterruptedException e) {
+            log.info("线程中断");
+        }
+        log.info("callable:{}", count);
+    }
+
+
+    @Test
+    @SneakyThrows
+    public void test_thread_pool() {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 4, 30, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
+                new ThreadPoolExecutor.CallerRunsPolicy());
+
+        Future<Integer> future = threadPoolExecutor.submit(() -> {
+            throw new RuntimeException("线程中断!");
+        }, 1);
+
+        try {
+            log.info("exception: {}", future.get());
+        } catch (RuntimeException e) {
+            log.info("catch exception");
+            throw new RuntimeException(e);
+        } catch (InterruptedException | ExecutionException e) {
+            log.info("线程中断异常");
+        }
+
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            Future<Integer> submit = threadPoolExecutor.submit(() -> finalI);
+            log.info("thread-pool : {}", submit.get());
+        }
 
     }
 
