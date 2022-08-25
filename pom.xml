@@ -15,7 +15,7 @@
         <spring.boot.version>2.7.1</spring.boot.version>
         <elasticsearch.version>6.8.22</elasticsearch.version>
         <springcloud.version>2021.0.3</springcloud.version>
-        <kotlin.version>1.7.0</kotlin.version>
+        <kotlin.version>1.7.10</kotlin.version>
         <kafka.version>3.0.0</kafka.version>
     </properties>
 
