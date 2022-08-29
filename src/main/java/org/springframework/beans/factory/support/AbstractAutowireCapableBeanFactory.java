@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanReference;
 
 /**
  * @author gjd3
@@ -21,10 +22,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     Object bean = null;
     try {
       bean = createBeanInstance(beanDefinition);
+      applyPropertyValues(name, bean, beanDefinition);
     } catch (Exception e) {
       throw new BeansException("Instantion of bean failed", e);
     }
-    applyPropertyValues(name, bean, beanDefinition);
     addSingleton(name, bean);
     return bean;
   }
@@ -50,6 +51,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         String name = propertyValue.getName();
         Object value = propertyValue.getValue();
 
+        if (value instanceof BeanReference){
+          //beanA 以来beanB 先实例化BeanB
+          BeanReference beanReference = (BeanReference) value;
+          value = getBean(beanReference.getBeanName());
+        }
         //通过反射设置值
         BeanUtil.setFieldValue(bean, name, value);
       }

@@ -6,10 +6,6 @@ import lombok.Data;
  * @author gjd3
  */
 @Data
-public class Person {
-  private String name;
-
-  private int age;
-
-  private Car car;
+public class Car {
+  private String brand;
 }
