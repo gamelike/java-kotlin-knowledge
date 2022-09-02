@@ -17,6 +17,7 @@
         <springcloud.version>2021.0.3</springcloud.version>
         <kotlin.version>1.7.0</kotlin.version>
         <kafka.version>3.0.0</kafka.version>
+        <mapstruct.version>1.5.0.Final</mapstruct.version>
     </properties>
 
     <dependencyManagement>
@@ -229,6 +230,17 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
 
     </dependencies>
