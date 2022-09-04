@@ -4,7 +4,7 @@ import org.junit.Test;
 /**
  * @author gjd3
  */
-public class DouleContent85 {
+public class DoubleContent85 {
   public int minimumRecolors(String blocks, int k) {
     int[] nums = new int[blocks.length() + 1];
     char[] chs = blocks.toCharArray();
