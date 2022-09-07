@@ -2,7 +2,7 @@ package org.springframework.test.ioc;
 
 import org.junit.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.support.XmlBeanDefinitionReader;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.test.ioc.bean.Car;
 import org.springframework.test.ioc.bean.Person;
 
