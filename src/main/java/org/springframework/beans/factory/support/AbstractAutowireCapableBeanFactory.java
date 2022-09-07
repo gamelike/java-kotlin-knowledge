@@ -3,13 +3,15 @@ package org.springframework.beans.factory.support;
 import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValue;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanReference;
 
 /**
  * @author gjd3
  */
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory
+    implements AutowireCapableBeanFactory {
 
   private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
 
@@ -51,7 +53,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         String name = propertyValue.getName();
         Object value = propertyValue.getValue();
 
-        if (value instanceof BeanReference){
+        if (value instanceof BeanReference) {
           //beanA 以来beanB 先实例化BeanB
           BeanReference beanReference = (BeanReference) value;
           value = getBean(beanReference.getBeanName());
