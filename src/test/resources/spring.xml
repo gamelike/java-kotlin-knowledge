@@ -9,4 +9,9 @@
   <bean id="car" class="org.springframework.test.ioc.bean.Car">
     <property name="brand" value="porsche"/>
   </bean>
+
+<!--  将两个自定义的processor注册到beanDefinition-->
+  <bean class="org.springframework.test.ioc.common.CustomBeanFactoryPostProcessor"/>
+
+  <bean class="org.springframework.test.ioc.common.CustomerBeanPostProcessor"/>
 </beans>

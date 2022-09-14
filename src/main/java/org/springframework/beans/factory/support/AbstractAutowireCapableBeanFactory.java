@@ -99,7 +99,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
    */
   protected void invokeInitMethod(String beanName, Object wrapperdBean, BeanDefinition beanDefinition) {
     //TODO 后面会实现
-    System.out.println("执行bean[" + beanName + "]的初始化方法");
+//    System.out.println("执行bean[" + beanName + "]的初始化方法");
   }
 
   @Override
