@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-  <bean id="person" class="org.springframework.test.ioc.bean.Person">
+  <bean id="person" class="org.springframework.test.ioc.bean.Person" init-method="customInitMethod" destroy-method="customDestroyMethod">
     <property name="name" value="derek"/>
     <property name="age" value="12"/>
     <property name="car" ref="car"/>
