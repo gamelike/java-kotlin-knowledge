@@ -10,11 +10,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * @author violet.
  */
-@EnableJpaRepositories(basePackages = "application.infrastructure")
-@EntityScan(basePackages = "application.model.po")
+@EnableJpaRepositories(basePackages = {"application.infrastructure", "**.model.repository"})
+@EntityScan(basePackages = {"application.model.po", "web.**.po"})
 @EnableFeignClients(basePackages = "application.rest")
 @SpringBootApplication
-@ComponentScan(basePackages = {"application","web"})
+@ComponentScan(basePackages = {"application", "web"})
 public class BootstrapApplication {
     public static void main(String[] args) {
         SpringApplication.run(BootstrapApplication.class, args);

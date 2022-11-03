@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Lazy;
  */
 @RequiredArgsConstructor
 @Slf4j
-@Configuration
+//@Configuration
 public class FeignConfig {
 
     @Lazy

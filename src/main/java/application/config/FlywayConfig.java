@@ -10,7 +10,7 @@ import org.springframework.context.annotation.DependsOn;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 public class FlywayConfig {
 
     /**

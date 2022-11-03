@@ -22,7 +22,7 @@ public class KafkaController {
     kafkaTemplate.send("first", msg);
   }
 
-  @KafkaListener(topics = "first")
+//  @KafkaListener(topics = "first")
   public void consumerTopic(String msg) {
     log.info("消费到消息：{}", msg);
   }
