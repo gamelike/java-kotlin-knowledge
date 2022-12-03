@@ -1,7 +1,6 @@
 package org.springframework.test.ioc;
 
 import cn.hutool.core.io.IoUtil;
-import jdk.jpackage.internal.IOUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -9,7 +8,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.URLResource;
 
 import java.io.InputStream;
-import java.util.Date;
 
 /**
  * @author gjd
