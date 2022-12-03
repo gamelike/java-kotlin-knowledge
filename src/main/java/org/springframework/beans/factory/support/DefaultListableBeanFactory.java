@@ -33,7 +33,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
   @Override
   public void preInstantiateSingletons() throws BeansException {
     for (String beanName : beanDefinitionMap.keySet()) {
-      getBean(beanName);
+      //判断是否是单例
+      if (beanDefinitionMap.get(beanName).isSingleton()) {
+        getBean(beanName);
+      }
     }
   }
 
