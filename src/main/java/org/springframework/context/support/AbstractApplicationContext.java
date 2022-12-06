@@ -17,11 +17,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
   public void refresh() throws BeansException {
     //创建bean 工厂 加载 beanDefinition
     refreshBeanFactory();
+    // 工厂是 new 出来的默认值
     ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 
-    //bean加载之前  更新beanDefinition
+    //bean加载之前 通过修改beanFactory  更新beanDefinition
     invokeBeanFactoryPostProcessors(beanFactory);
-    //前置 后置处理bean
+    //注册 bean 的前置后置处理  （注册进来后，在 getBean的时候，也就是create时候，会自动执行所有的前置后置方法）
     registerBeanPostProcessors(beanFactory);
 
     //提前实例化单例bean

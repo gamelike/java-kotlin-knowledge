@@ -22,6 +22,7 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
    */
   public ClassPathXmlApplicationContext(String[] configLocations) {
     this.configLocations = configLocations;
+    //构造方法执行到此处
     refresh();
   }
 
