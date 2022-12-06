@@ -8,7 +8,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
  */
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
 
-  private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
+  private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
 
   @Override
   protected Object createBean(String name, BeanDefinition beanDefinition) {
