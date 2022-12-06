@@ -91,6 +91,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
 
         BeanDefinition beanDefinition = new BeanDefinition(clazz);
+        // 添加 xml中存在 初始 和销毁方法的
         beanDefinition.setInitMethodName(initMethodName);
         beanDefinition.setDestroyMethodName(destroyMethodName);
         for (int j = 0; j < bean.getChildNodes().getLength(); j++) {

@@ -40,7 +40,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     //注册有销毁方法的bean
-
     registerDisposableBeanIfNecessary(name, bean, beanDefinition);
 
     addSingleton(name, bean);
@@ -48,6 +47,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
   }
 
   private void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
+    // 如果是 销毁bean  或者 其中 xml配置的销毁方法不为空，则注册销毁bean
     if (bean instanceof DisposableBean || StrUtil.isNotEmpty(beanDefinition.getDestroyMethodName())) {
       registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
     }
@@ -118,12 +118,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
    * @param beanDefinition
    */
   protected void invokeInitMethod(String beanName, Object bean, BeanDefinition beanDefinition) throws Throwable {
-    //TODO 后面会实现
+    //初始化方法时候，去判断是不是 实现了初始化bean
     if (bean instanceof InitializingBean) {
-      ((InitializingBean) bean).afterPropertiesSet();
+      ((InitializingBean) bean).afterPropertiesSet();  //执行 初始化bean的初始化方法
     }
     String initMethodName = beanDefinition.getInitMethodName();
-    if (StrUtil.isNotEmpty(initMethodName)) {
+    if (StrUtil.isNotEmpty(initMethodName)) {   //对于 xml配置了初始化方法的，执行其初始化方法
       Method initMethod = ClassUtil.getPublicMethod(beanDefinition.getBeanClass(), initMethodName);
       if (initMethod == null) {
         throw new BeansException("Could not find an init method named '" + initMethodName + "' on bean with name '" + beanName + "'");

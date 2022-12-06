@@ -14,6 +14,7 @@ import java.util.Set;
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
   private Map<String, Object> singletonObjects = new HashMap<>();
 
+  //用来记录那些bean需要被销毁
   private final Map<String, DisposableBean> disposableBeans = new HashMap<>();
 
   @Override
