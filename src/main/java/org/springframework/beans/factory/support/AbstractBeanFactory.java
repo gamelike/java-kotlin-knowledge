@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author gjd3
@@ -23,20 +22,22 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
   @Override
   public Object getBean(String name) throws BeansException {
+    // 从单例换从中读取一下
     Object sharedInstance = getSingleton(name);
-    if (sharedInstance != null) {
+    if (sharedInstance != null) {  //读不到，可能是factoryBean
       //如果是factoryBean 从FactoryBean#getObject 创建Bean
       return getObjectForBeanInstance(sharedInstance, name);
     }
 
+    //读取其定义
     BeanDefinition beanDefinition = getBeanDefinition(name);
-    Object bean = createBean(name, beanDefinition);
-    return getObjectForBeanInstance(bean, name);
+    Object bean = createBean(name, beanDefinition); //创建出来bean
+    return getObjectForBeanInstance(bean, name); //再去尝试读取 factoryBean
   }
 
   /**
    * 如果是FactoryBean,从FactoryBean#getObject 创建Bean
-   *
+   * 否则，返回beanInstance本身
    * @param beanInstance
    * @param beanName
    * @return
