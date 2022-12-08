@@ -9,6 +9,8 @@ import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.framework.CglibAopProxy;
 import org.springframework.aop.framework.JdkDynamicAopProxy;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor;
+import org.springframework.test.common.WorldServiceBeforeAdvice;
 import org.springframework.test.common.WorldServiceInterceptor;
 import org.springframework.test.service.WorldService;
 import org.springframework.test.service.WorldServiceImpl;
@@ -59,6 +61,16 @@ public class DynamicProxyTest {
 
     advisedSupport.setProxyTargetClass(true);
     WorldService proxy2 = (WorldService) new ProxyFactory(advisedSupport).getProxy();
+    proxy.explode();
+  }
+
+  @Test
+  public void testBeforeAdvice() {
+    WorldServiceBeforeAdvice beforeAdvice = new WorldServiceBeforeAdvice();
+    MethodBeforeAdviceInterceptor methodBeforeAdviceInterceptor = new MethodBeforeAdviceInterceptor(beforeAdvice);
+
+    advisedSupport.setMethodInterceptor(methodBeforeAdviceInterceptor);
+    WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
     proxy.explode();
   }
 }
