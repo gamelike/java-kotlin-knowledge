@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-  <bean id="person" class="org.springframework.test.ioc.bean.Person" init-method="customInitMethod"
+  <bean id="person" class="org.springframework.test.bean.Person" init-method="customInitMethod"
         destroy-method="customDestroyMethod">
     <property name="name" value="derek"/>
     <property name="age" value="12"/>
     <property name="car" ref="car"/>
   </bean>
 
-  <bean id="car" class="org.springframework.test.ioc.bean.Car">
+  <bean id="car" class="org.springframework.test.bean.Car">
     <property name="brand" value="porsche"/>
   </bean>
 
   <!--  将两个自定义的processor注册到beanDefinition-->
-  <bean class="org.springframework.test.ioc.common.CustomBeanFactoryPostProcessor"/>
+  <bean class="org.springframework.test.common.CustomBeanFactoryPostProcessor"/>
 
-  <bean class="org.springframework.test.ioc.common.CustomerBeanPostProcessor"/>
-  <bean class="org.springframework.test.ioc.service.HelloService" id="helloService"/>
+  <bean class="org.springframework.test.common.CustomerBeanPostProcessor"/>
+  <bean class="org.springframework.test.service.HelloService" id="helloService"/>
 </beans>

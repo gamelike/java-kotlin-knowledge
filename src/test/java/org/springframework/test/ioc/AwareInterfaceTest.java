@@ -1,10 +1,9 @@
 package org.springframework.test.ioc;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.test.ioc.service.HelloService;
+import org.springframework.test.service.HelloService;
 
 /**
  * @author gjd3
