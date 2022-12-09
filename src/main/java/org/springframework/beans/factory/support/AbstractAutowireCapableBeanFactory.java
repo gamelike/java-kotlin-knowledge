@@ -13,8 +13,10 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.BeanReference;
+import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author gjd3
@@ -26,7 +28,47 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
   @Override
   protected Object createBean(String name, BeanDefinition beanDefinition) {
+    //如果bean需要代理，直接返回代理对象
+    Object bean = resolveBeforeInstantiation(name, beanDefinition);
+    if (bean != null) {
+      return bean;
+    }
     return doCreateBean(name, beanDefinition);
+  }
+
+  /**
+   * 执行InstantiationAwareBeanPostProcessor的方法，如果bean需要代理，直接返回代理对象
+   *
+   * @param beanName
+   * @param beanDefinition
+   * @return
+   */
+  private Object resolveBeforeInstantiation(String beanName, BeanDefinition beanDefinition) {
+    //对bean实例化前加代理
+    Object bean = applyBeanPostProcessorsBeforeInstantiation(beanName, beanDefinition.getBeanClass());
+    if (bean != null) {
+      //对代理后的bean  加值
+      bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+    }
+    return bean;
+  }
+
+  /**
+   * @param beanName
+   * @param beanClass
+   * @return
+   */
+  private Object applyBeanPostProcessorsBeforeInstantiation(String beanName, Class beanClass) {
+    List<BeanPostProcessor> beanPostProcessorList = getBeanPostProcessorList();
+    for (BeanPostProcessor beanPostProcessor : beanPostProcessorList) {
+      if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+        Object result = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessBeforeInstantiation(beanClass, beanName);
+        if (result != null) {
+          return result;
+        }
+      }
+    }
+    return null;
   }
 
   protected Object doCreateBean(String name, BeanDefinition beanDefinition) {
