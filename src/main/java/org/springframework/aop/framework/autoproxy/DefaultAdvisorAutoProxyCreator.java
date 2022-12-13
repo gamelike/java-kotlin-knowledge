@@ -1,7 +1,9 @@
 package org.springframework.aop.framework.autoproxy;
 
+import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
-import org.aspectj.weaver.Advice;
+//注入错了类，aop.Advice是 接口，是根。   下面的是实现类
+//import org.aspectj.weaver.Advice;
 import org.springframework.aop.AdvisedSupport;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.ClassFilter;
