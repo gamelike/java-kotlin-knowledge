@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinitionReader;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.dom4j.io.SAXReader;
@@ -34,6 +35,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
   //对初始化和销毁方法的注入
   public static final String INIT_METHOD_ATTRIBUTE = "init-method";
   public static final String DESTROY_METHOD_ATTRIBUTE = "destroy-method";
+
+  public static final String BASE_PACKAGE_ATTRIBUTE = "base-package";
+
+  public static final String COMPONENT_SCAN_ELEMENT = "component-scan";
 
   public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
     super(registry);
@@ -69,6 +74,15 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     Document document = saxReader.read(is);
     Element beans = document.getRootElement();
 
+    Element componentScan = beans.element(COMPONENT_SCAN_ELEMENT);
+
+    if (componentScan != null) {
+      String scanPath = componentScan.attributeValue(BASE_PACKAGE_ATTRIBUTE);
+      if (StrUtil.isEmpty(scanPath)) {
+        throw new BeansException("the value base-package scan attribute can not be empty or null");
+      }
+      scanPackage(scanPath);
+    }
 
     List<Element> beanList = beans.elements(BEAN_ELEMENT);
     //遍历处理
@@ -131,6 +145,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
       //注册beanDefinition
       getRegistry().registryBeanDefinition(beanName, beanDefinition);
     }
+  }
+
+  private void scanPackage(String scanPath) {
+    String[] basePackages = StrUtil.splitToArray(scanPath, ',');
+    ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(getRegistry());
+    scanner.doScan(basePackages);
   }
 }
 

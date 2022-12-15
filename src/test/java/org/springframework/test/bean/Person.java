@@ -3,11 +3,13 @@ package org.springframework.test.bean;
 import lombok.Data;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 /**
  * @author gjd3
  */
 @Data
+@Component
 public class Person implements InitializingBean, DisposableBean {
   private String name;
 
