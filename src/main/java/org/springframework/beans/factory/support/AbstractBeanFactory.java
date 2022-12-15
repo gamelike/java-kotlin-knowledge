@@ -5,9 +5,11 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.util.StringValueResolver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,9 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
   private final List<BeanPostProcessor> beanPostProcessorList = new ArrayList<>();
 
   private final Map<String, Object> factoryBeanObejctCache = new HashMap<>();
+
+
+  private List<StringValueResolver> embeddedValueResolvers = new LinkedList<>();
 
   @Override
   public Object getBean(String name) throws BeansException {
@@ -38,6 +43,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
   /**
    * 如果是FactoryBean,从FactoryBean#getObject 创建Bean
    * 否则，返回beanInstance本身
+   *
    * @param beanInstance
    * @param beanName
    * @return
@@ -83,5 +89,19 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
   @Override
   public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
     return (T) getBean(name);
+  }
+
+  @Override
+  public void addEmbeddedValueResolver(StringValueResolver valueResolver) {
+    this.embeddedValueResolvers.add(valueResolver);
+  }
+
+  @Override
+  public String resolveEmbeddedValue(String value) {
+    String result = value;
+    for (StringValueResolver valueResolver : this.embeddedValueResolvers) {
+      result = valueResolver.resolveStringValue(result);
+    }
+    return result;
   }
 }

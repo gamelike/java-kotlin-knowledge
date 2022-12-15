@@ -5,7 +5,7 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValue;
-import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -75,6 +75,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     Object bean = null;
     try {
       bean = createBeanInstance(beanDefinition);
+      //设置属性之前，允许beanPostProcessor修改属性值
+      applyBeanPostBeforeApplyingPropertyValues(name, bean, beanDefinition);
+
       //为bean 填充属性
       applyPropertyValues(name, bean, beanDefinition);
       //执行bean初始化时候 执行 beanPostProcessor 的前置和后置方法
@@ -91,6 +94,27 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
       addSingleton(name, bean);
     }
     return bean;
+  }
+
+
+  /**
+   * 修改beanDefinition中的值
+   *
+   * @param name
+   * @param bean
+   * @param beanDefinition
+   */
+  private void applyBeanPostBeforeApplyingPropertyValues(String name, Object bean, BeanDefinition beanDefinition) {
+    for (BeanPostProcessor beanPostProcessor : getBeanPostProcessorList()) {
+      if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+        PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, name);
+        if (pvs != null) {
+          for (PropertyValue propertyValue : pvs.getPropertyValueList()) {
+            beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
+          }
+        }
+      }
+    }
   }
 
   private void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {

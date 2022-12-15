@@ -11,6 +11,8 @@ import java.util.Set;
  * @author gjd
  */
 public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateComponentProvider {
+
+  public static final String AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME = "org.springframework.context.annotation.internalAutowiredAnnotationProcessor";
   private BeanDefinitionRegistry registry;
 
   public ClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry) {
@@ -32,6 +34,9 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
         registry.registryBeanDefinition(beanName, beanDefinition);
       }
     }
+
+    //注册处理 autowired和value 的 beanPostProcessor
+    registry.registryBeanDefinition(AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME, new BeanDefinition(AutowiredAnnotationBeanPostProcessor.class));
   }
 
 

@@ -3,6 +3,7 @@ package org.springframework.test.bean;
 import lombok.Data;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,8 +12,9 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class Person implements InitializingBean, DisposableBean {
+  @Value("${name}")
   private String name;
-
+  @Value("${age}")
   private int age;
 
   private Car car;
