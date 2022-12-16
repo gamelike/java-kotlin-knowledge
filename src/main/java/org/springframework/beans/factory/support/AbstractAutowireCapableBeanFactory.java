@@ -75,13 +75,20 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     Object bean = null;
     try {
       bean = createBeanInstance(beanDefinition);
+
+      //实例化bean之后执行
+      boolean continueWithPropertyPopulation = applyBeanPostProcessorsAfterInstantiation(name, bean);
+      if (!continueWithPropertyPopulation) {
+        return bean;
+      }
+
       //设置属性之前，允许beanPostProcessor修改属性值
       applyBeanPostBeforeApplyingPropertyValues(name, bean, beanDefinition);
 
       //为bean 填充属性
       applyPropertyValues(name, bean, beanDefinition);
       //执行bean初始化时候 执行 beanPostProcessor 的前置和后置方法
-      initializeBean(name, bean, beanDefinition);
+      bean = initializeBean(name, bean, beanDefinition);
     } catch (Exception e) {
       throw new BeansException("Instantion of bean failed", e);
     }
@@ -94,6 +101,26 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
       addSingleton(name, bean);
     }
     return bean;
+  }
+
+  /**
+   * bean实例化后执行，如果返回false，不执行后续设置属性的逻辑
+   *
+   * @param name
+   * @param bean
+   * @return
+   */
+  private boolean applyBeanPostProcessorsAfterInstantiation(String name, Object bean) {
+    boolean continueWithPropertyPopulation = true;
+    for (BeanPostProcessor beanPostProcessor : getBeanPostProcessorList()) {
+      if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+        if (!((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessAfterInstantiation(bean, name)) {
+          continueWithPropertyPopulation = false;
+          break;
+        }
+      }
+    }
+    return continueWithPropertyPopulation;
   }
 
 
