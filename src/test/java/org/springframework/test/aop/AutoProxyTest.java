@@ -14,4 +14,13 @@ public class AutoProxyTest {
     WorldService worldService = applicationContext.getBean("worldService", WorldService.class);
     worldService.explode();
   }
+
+  @Test
+  public void testPopulateProxyBeanWithPropertyValues() {
+    ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:populate-proxy-bean-with-property-values.xml");
+    WorldService worldService = applicationContext.getBean("worldService", WorldService.class);
+    worldService.explode();
+
+    System.out.println(worldService.getName());
+  }
 }
