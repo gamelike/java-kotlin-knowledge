@@ -3,6 +3,7 @@ package org.springframework.test.bean;
 import lombok.Data;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Autowired;
 import org.springframework.context.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ public class Person implements InitializingBean, DisposableBean {
   @Value("${age}")
   private int age;
 
+  @Autowired
   private Car car;
 
   public void customInitMethod() {
