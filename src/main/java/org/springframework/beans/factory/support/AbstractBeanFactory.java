@@ -5,6 +5,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.util.StringValueResolver;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
 
   private List<StringValueResolver> embeddedValueResolvers = new LinkedList<>();
+
+  private ConversionService conversionService;
 
   @Override
   public Object getBean(String name) throws BeansException {
@@ -91,6 +94,14 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     return (T) getBean(name);
   }
 
+
+  @Override
+  public boolean containsBean(String name) {
+    return containsBeanDefinition(name);
+  }
+
+  protected abstract boolean containsBeanDefinition(String beanName);
+
   @Override
   public void addEmbeddedValueResolver(StringValueResolver valueResolver) {
     this.embeddedValueResolvers.add(valueResolver);
@@ -103,5 +114,15 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
       result = valueResolver.resolveStringValue(result);
     }
     return result;
+  }
+
+  @Override
+  public ConversionService getConversionService() {
+    return conversionService;
+  }
+
+  @Override
+  public void setConversionService(ConversionService conversionService) {
+    this.conversionService = conversionService;
   }
 }
