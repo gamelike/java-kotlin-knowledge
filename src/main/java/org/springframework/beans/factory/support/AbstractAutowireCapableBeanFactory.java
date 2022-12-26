@@ -78,6 +78,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     try {
       bean = createBeanInstance(beanDefinition);
 
+      //解决循环以来，放入缓存中提前暴露
+      if (beanDefinition.isSingleton()) {
+        earlySingletonObjects.put(name, bean);
+      }
+
       //实例化bean之后执行
       boolean continueWithPropertyPopulation = applyBeanPostProcessorsAfterInstantiation(name, bean);
       if (!continueWithPropertyPopulation) {
