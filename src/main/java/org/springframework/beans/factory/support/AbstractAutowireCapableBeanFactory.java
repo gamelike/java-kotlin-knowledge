@@ -10,6 +10,7 @@ import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -80,7 +81,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
       //解决循环以来，放入缓存中提前暴露
       if (beanDefinition.isSingleton()) {
-        earlySingletonObjects.put(name, bean);
+        Object finalBean = bean;
+        addSingletonFactory(name, new ObjectFactory<Object>() {
+          @Override
+          public Object getObject() throws BeansException {
+            return getEarlyBeanReference(name, beanDefinition, finalBean);
+          }
+        });
       }
 
       //实例化bean之后执行
@@ -104,10 +111,26 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     registerDisposableBeanIfNecessary(name, bean, beanDefinition);
 
+    Object exposedObject = bean;
     if (beanDefinition.isSingleton()) {
-      addSingleton(name, bean);
+      //如果有代理对象，此处获取代理对象
+      exposedObject = getSingleton(name);
+      addSingleton(name, exposedObject);
     }
-    return bean;
+    return exposedObject;
+  }
+
+  protected Object getEarlyBeanReference(String beanName, BeanDefinition beanDefinition, Object bean) {
+    Object exposedObject = bean;
+    for (BeanPostProcessor bp : getBeanPostProcessorList()) {
+      if (bp instanceof InstantiationAwareBeanPostProcessor) {
+        exposedObject = ((InstantiationAwareBeanPostProcessor) bp).getEarlyBeanReference(exposedObject, beanName);
+        if (exposedObject == null) {
+          return exposedObject;
+        }
+      }
+    }
+    return exposedObject;
   }
 
   /**

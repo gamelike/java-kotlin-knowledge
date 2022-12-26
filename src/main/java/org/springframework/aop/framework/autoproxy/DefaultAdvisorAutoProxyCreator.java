@@ -20,6 +20,8 @@ import org.springframework.beans.factory.config.InstantiationAwareBeanPostProces
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 在beanFactory生成之前做前置处理，添加aop东西，来生成新bean
@@ -29,6 +31,9 @@ import java.util.Collection;
 public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPostProcessor, BeanFactoryAware {
 
   private DefaultListableBeanFactory beanFactory;
+
+  private Set<Object> earlyProxyReferences = new HashSet<>();
+
 
   @Override
   public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
@@ -50,6 +55,19 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
 
   @Override
   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    if (!earlyProxyReferences.contains(beanName)) {
+      return wrapIfNecessary(bean, beanName);
+    }
+    return bean;
+  }
+
+  @Override
+  public Object getEarlyBeanReference(Object bean, String beanName) throws BeansException {
+    earlyProxyReferences.add(beanName);
+    return wrapIfNecessary(bean, beanName);
+  }
+
+  protected Object wrapIfNecessary(Object bean, String beanName) {
     //避免死循环，跳过这个跟aop相关的类
     if (isInfrastructureClass(bean.getClass())) {
       return bean;
