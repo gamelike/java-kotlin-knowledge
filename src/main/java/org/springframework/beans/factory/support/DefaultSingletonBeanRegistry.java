@@ -12,13 +12,22 @@ import java.util.Set;
  * @author gjd3
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
+
+  //一级缓存
   private Map<String, Object> singletonObjects = new HashMap<>();
+
+  //二级缓存 直接创建出来就会被放进来，会存在可能放置的是代理前的对象
+  protected Map<String, Object> earlySingletonObjects = new HashMap<>();
 
   private final Map<String, DisposableBean> disposableBeans = new HashMap<>();
 
   @Override
   public Object getSingleton(String beanName) {
-    return singletonObjects.get(beanName);
+    Object bean = singletonObjects.get(beanName);
+    if (bean == null) {
+      bean = earlySingletonObjects.get(beanName);
+    }
+    return bean;
   }
 
   public void addSingleton(String beanName, Object singletonObject) {

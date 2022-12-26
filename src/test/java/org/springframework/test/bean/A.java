@@ -8,4 +8,8 @@ import lombok.Data;
 @Data
 public class A {
   private B b;
+
+  public void func() {
+
+  }
 }
