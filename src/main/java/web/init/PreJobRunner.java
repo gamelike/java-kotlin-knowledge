@@ -5,8 +5,6 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.Order;
@@ -30,7 +28,8 @@ public class PreJobRunner implements ApplicationContextAware {
       public void run() {
         sleep(5  * 1000);
         log.info("pre job 启动成功");
-        String applicationName = applicationContext.getApplicationName();
+//        String applicationName = applicationContext.getApplicationName();
+        String applicationName = "1";
         System.out.println(applicationName);
         applicationContext.publishEvent(new PreJobEvent("发布事件"));
       }

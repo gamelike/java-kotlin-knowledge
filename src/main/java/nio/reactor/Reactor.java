@@ -33,7 +33,8 @@ public class Reactor implements Closeable, Runnable {
     try {
       serverSocketChannel.bind(new InetSocketAddress(8080));
       serverSocketChannel.configureBlocking(false);
-      serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT, new Acceptor(serverSocketChannel, selector));// 确保选择器可以选择到对象
+//      serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT, new Acceptor(serverSocketChannel, selector));// 确保选择器可以选择到对象
+      serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT, new Acceptor(serverSocketChannel));// 不适用主acator的selector,在 subreactor中自行创建，此seleactor只负责接受连接
       while (true) {
         int count = selector.select();
         System.out.println("监听到" + count + "个事件");
