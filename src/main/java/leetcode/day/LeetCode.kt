@@ -52,3 +52,22 @@ fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
         }
     }
 }
+
+fun swapPairs(head: ListNode?): ListNode? {
+    if (head == null) return null
+    else if (head.next == null) return head
+    var temNode = head
+    var returnNode = head.next
+    var preNode : ListNode? = null
+    while (temNode?.next != null) {
+        val nextNode = temNode.next
+        temNode.next = nextNode!!.next
+        nextNode.next = temNode
+        if (preNode != null) {
+            preNode.next = nextNode
+        }
+        preNode = temNode
+        temNode = temNode.next
+    }
+    return returnNode
+}
