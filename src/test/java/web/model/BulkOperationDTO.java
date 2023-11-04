@@ -1,4 +1,4 @@
-package com.model;
+package web.model;
 
 public class BulkOperationDTO {
 

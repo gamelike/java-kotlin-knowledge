@@ -1,4 +1,4 @@
-package com.application.repository;
+package web.application.repository;
 
 import application.domain.service.HistoryService;
 import application.infrastructure.annotation.EnableFilter;
