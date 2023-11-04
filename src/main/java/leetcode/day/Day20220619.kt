@@ -1,11 +1,7 @@
 package leetcode
 
-import kotlin.math.max
+import leetcode.day.TreeNode
 
-class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
-}
 
 class Day20220619 {
     val result = mutableMapOf<Int, Int>()

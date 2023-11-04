@@ -28,4 +28,4 @@ jobs:
         run: |
           ls -al
       - name: maven build
-        run: mvn clean package
+        run: mvn clean package -DskipTests

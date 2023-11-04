@@ -1,6 +1,5 @@
 package leetcode.day;
 
-import leetcode.TreeNode;
 import leetcode.structure.dataStructure.ListNode;
 import leetcode.structure.dataStructure.Node;
 import org.junit.Test;
