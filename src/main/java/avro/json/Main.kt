@@ -23,6 +23,9 @@ fun main() {
 
 val blockingQueue = SynchronousQueue<String>()
 
+/**
+ * consumer: deserialize from avro generic record.
+ */
 fun consumer() {
     println("---started-consumer-thread---")
     Thread {
@@ -56,6 +59,9 @@ fun consumer() {
     }.start()
 }
 
+/**
+ * producer: serialize generic data record to json,then send message
+ */
 fun producer() {
     println("---started-producer-thread---")
     Thread {
