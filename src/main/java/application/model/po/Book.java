@@ -1,11 +1,13 @@
 package application.model.po;
 
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.Formula;
 
-import javax.persistence.*;
 import java.util.Objects;
 
 /**

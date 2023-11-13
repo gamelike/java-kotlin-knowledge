@@ -1,9 +1,9 @@
 package application.infrastructure.repository.convert;
 
 import application.model.constant.HistoryType;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 
 /**
  * @author violet.

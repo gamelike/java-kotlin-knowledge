@@ -1,8 +1,9 @@
 package json.jackson.deserialize;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.kotlin.KotlinFeature;
+import com.fasterxml.jackson.module.kotlin.KotlinModule;
 import json.jackson.deserialize.dto.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -101,11 +102,11 @@ public class DeserializeJsonTest {
     @SneakyThrows
     public void when_deserialize_using_json_alias() {
         String json = """
-                {
-                "fName": "violet",
-                "lastName": "Evergarden"
-                }
-               """;
+                 {
+                 "fName": "violet",
+                 "lastName": "Evergarden"
+                 }
+                """;
 
         BeanWithJsonAlias bean = new ObjectMapper()
                 .readerFor(BeanWithJsonAlias.class)
@@ -115,4 +116,29 @@ public class DeserializeJsonTest {
         Assert.assertEquals("Evergarden", bean.lastName());
     }
 
+    @Test
+    @SneakyThrows
+    public void deserializer_with_custom() {
+        ObjectMapper objectMapper = new ObjectMapper()
+                .registerModule(new KotlinModule.Builder()
+                        .withReflectionCacheSize(512)
+                        .configure(KotlinFeature.NullToEmptyCollection, true)
+                        .configure(KotlinFeature.NullToEmptyMap, true)
+                        .configure(KotlinFeature.NullIsSameAsDefault, false)
+                        .configure(KotlinFeature.SingletonSupport, true)
+                        .configure(KotlinFeature.StrictNullChecks, true)
+                        .build());
+        BeanWithCustomDeserializer bean = objectMapper.readValue(
+                """
+                        {
+                            "id": "test",
+                            "name": "test_name",
+                            "tags": null
+                        }
+                        """
+                , BeanWithCustomDeserializer.class);
+        Assert.assertEquals(bean.getId(), "test");
+        Assert.assertEquals(bean.getName(), "test_name");
+        Assert.assertNotNull(bean.getTags());
+    }
 }
