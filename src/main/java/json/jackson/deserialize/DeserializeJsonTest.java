@@ -128,13 +128,15 @@ public class DeserializeJsonTest {
                         .configure(KotlinFeature.SingletonSupport, true)
                         .configure(KotlinFeature.StrictNullChecks, true)
                         .build());
-        BeanWithCustomDeserializer bean = objectMapper.readValue("""
-                {
-                    "id": "test",
-                    "name": "test_name",
-                    "tags": null
-                }
-                """, BeanWithCustomDeserializer.class);
+        BeanWithCustomDeserializer bean = objectMapper.readValue(
+                """
+                        {
+                            "id": "test",
+                            "name": "test_name",
+                            "tags": null
+                        }
+                        """
+                , BeanWithCustomDeserializer.class);
         Assert.assertEquals(bean.getId(), "test");
         Assert.assertEquals(bean.getName(), "test_name");
         Assert.assertNotNull(bean.getTags());
