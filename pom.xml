@@ -12,9 +12,9 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring.boot.version>2.7.1</spring.boot.version>
+        <spring.boot.version>3.1.5</spring.boot.version>
         <elasticsearch.version>6.8.22</elasticsearch.version>
-        <springcloud.version>2021.0.3</springcloud.version>
+        <springcloud.version>2022.0.4</springcloud.version>
         <kotlin.version>1.9.20</kotlin.version>
         <kafka.version>3.0.0</kafka.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
