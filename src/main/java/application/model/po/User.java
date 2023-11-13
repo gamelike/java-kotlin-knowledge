@@ -1,12 +1,15 @@
 package application.model.po;
 
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
 
-import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,7 +23,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @FilterDef(name = "filter",
-        parameters = @ParamDef(name = "username",type = "string"))
+        parameters = @ParamDef(name = "username",type = String.class))
 @Filter(name = "filter",
         condition = "username = :username")
 public class User {

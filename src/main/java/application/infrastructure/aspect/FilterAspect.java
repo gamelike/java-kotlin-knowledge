@@ -1,6 +1,8 @@
 package application.infrastructure.aspect;
 
 import application.infrastructure.annotation.EnableFilter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,10 +10,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.lang.reflect.Field;
 
 /**
  * @author violet.

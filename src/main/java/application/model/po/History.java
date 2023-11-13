@@ -1,8 +1,8 @@
 package application.model.po;
 
 import application.model.constant.HistoryType;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 
 /**
  * @author violet.
