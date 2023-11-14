@@ -53,6 +53,10 @@
             <version>0.17</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-avro</artifactId>
+        </dependency>
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
