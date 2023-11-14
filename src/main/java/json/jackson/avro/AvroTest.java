@@ -1,8 +1,11 @@
 package json.jackson.avro;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.avro.AvroMapper;
 import com.fasterxml.jackson.dataformat.avro.AvroSchema;
+import com.fasterxml.jackson.dataformat.avro.schema.AvroSchemaGenerator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import json.jackson.avro.model.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.Schema;
@@ -89,6 +92,21 @@ public class AvroTest {
                 Assert.assertNull(employee.boss());
             }
         }
+    }
+
+    @Test
+    public void avro_generate_schema() throws JsonMappingException {
+        // Create and configure Avro mapper. With for example a module or a serializer.
+        AvroMapper mapper = AvroMapper.builder()
+                .addModule(new JavaTimeModule())
+                .build();
+        AvroSchemaGenerator gen = new AvroSchemaGenerator();
+        // Enable logical types
+        gen.enableLogicalTypes();
+        mapper.acceptJsonFormatVisitor(Employee.class, gen);
+        Schema actualSchema = gen.getGeneratedSchema().getAvroSchema();
+        // generate schema
+        log.info("schema: {}", actualSchema.toString(true));
     }
 
 
