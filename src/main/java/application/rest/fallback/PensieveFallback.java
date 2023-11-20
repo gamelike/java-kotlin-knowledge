@@ -2,13 +2,12 @@ package application.rest.fallback;
 
 import application.rest.PensieveService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 /**
  * @author violet
  */
 @Slf4j
-@Service
+//@Service
 public class PensieveFallback implements PensieveService {
     @Override
     public String getDataBaseMessage(String databaseType, String typesAliasName) {
