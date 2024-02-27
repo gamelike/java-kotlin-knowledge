@@ -16,7 +16,7 @@
         <elasticsearch.version>6.8.22</elasticsearch.version>
         <springcloud.version>2022.0.4</springcloud.version>
         <kotlin.version>1.9.22</kotlin.version>
-        <kafka.version>3.6.0</kafka.version>
+        <kafka.version>3.7.0</kafka.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
 
