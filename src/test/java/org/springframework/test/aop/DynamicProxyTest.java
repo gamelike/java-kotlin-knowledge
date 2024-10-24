@@ -99,9 +99,9 @@ public class DynamicProxyTest {
       advisedSupport1.setTargetSource(targetSource);
       advisedSupport1.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
       advisedSupport1.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
-      advisedSupport1.setProxyTargetClass(true); //设置JDK or CGLIB
+      advisedSupport1.setProxyTargetClass(false); //设置JDK or CGLIB
 
-      WorldService proxy = (WorldService) new ProxyFactory(advisedSupport).getProxy();
+      WorldService proxy = (WorldService) new ProxyFactory(advisedSupport1).getProxy();
       proxy.explode();
     }
 
