@@ -81,7 +81,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
   }
 
   /**
-   * 发布事件
+   * 发布事件,发布完的事件，都会调用applicationEventMulticaster，遍历其中的listener,listener对感兴趣的event就会做自定义的操作
    *
    * @param event
    */
