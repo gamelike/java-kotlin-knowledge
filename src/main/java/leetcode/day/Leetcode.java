@@ -2,6 +2,7 @@ package leetcode.day;
 
 import leetcode.structure.dataStructure.ListNode;
 import leetcode.structure.dataStructure.Node;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.*;
@@ -10,6 +11,7 @@ import java.util.*;
  * @author violet
  */
 @SuppressWarnings("all")
+@Slf4j
 public class Leetcode {
 
     /**
@@ -318,6 +320,96 @@ public class Leetcode {
         System.out.println(cbtInserter.get_root());
 
         List<Integer> list = List.of(1, 2, 3, 4);
+    }
+
+    /**
+     * leetcode calc seal arr ^
+     * make sure last and first is equal.
+     *
+     * @param derived
+     * @return
+     */
+    public boolean doesValidArrayExist(int[] derived) {
+        long count = Arrays.stream(derived).filter(it -> it == 1).count();
+        return (count & 1) == 0;
+    }
+
+
+    /**
+     * calc the max.
+     *
+     * @param fruits array.
+     * @return max.
+     */
+    public int totalFruit(int[] fruits) {
+        int n = fruits.length;
+        Map<Integer, Integer> cnt = new HashMap<Integer, Integer>();
+        int left = 0, ans = 0;
+        for (int right = 0; right < n; ++right) {
+            cnt.put(fruits[right], cnt.getOrDefault(fruits[right], 0) + 1);
+            while (cnt.size() > 2) {
+                cnt.put(fruits[left], cnt.get(fruits[left]) - 1);
+                if (cnt.get(fruits[left]) == 0) {
+                    cnt.remove(fruits[left]);
+                }
+                ++left;
+            }
+            ans = Math.max(ans, right - left + 1);
+        }
+        return ans;
+    }
+
+    /**
+     * count submatrices with all ones.
+     *
+     * @param mat matrices
+     * @return count.
+     */
+    public int numSubmat(int[][] mat) {
+        int m = mat.length;
+        if (m < 1) {
+            return 0;
+        }
+        int n = mat[0].length;
+        int[][] row = new int[m][n];
+        int count = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (j == 0) {
+                    row[i][j] = mat[i][j];
+                } else {
+                    row[i][j] = mat[i][j] == 0 ? 0 : mat[i][j - 1] + 1;
+                }
+                int cur = row[i][j];
+                for (int k = i; k >= 0; k--) {
+                    cur = Math.min(cur, row[k][j]);
+                    if (cur == 0) {
+                        break;
+                    }
+                    count += cur;
+                }
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                log.info("索引为: {} {}, 对应的值: {}", i, j, row[i][j]);
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Leetcode leetcode = new Leetcode();
+        /*
+         1 0 2
+         1 2 0
+         1 2 0
+         */
+        System.out.println(leetcode.numSubmat(new int[][]{
+                {1, 0, 1},
+                {1, 1, 0},
+                {1, 1, 0}
+        }));
     }
 
 }
