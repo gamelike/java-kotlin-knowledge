@@ -2,6 +2,7 @@ package jdkStudy.jvm.heap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openjdk.jol.info.ClassLayout;
+import org.openjdk.jol.info.GraphLayout;
 
 @Slf4j
 public class ObjectUtils {
@@ -13,13 +14,24 @@ public class ObjectUtils {
         test.name = "test";
         test.age = 24;
         test.sex = true;
+        test.content = "test";
+        TestA testA = new TestA();
+        testA.name = "test";
+        test.testA = testA;
         log.info("object message : {}", ClassLayout.parseInstance(test).toPrintable());
+        System.out.println("Total Size: " + GraphLayout.parseInstance(test).totalSize() + " bytes");
     }
 
-    private static class Test {
+    public static class Test {
         public String name;
         public boolean sex;
         public int age;
+        public String content;
+        public TestA testA;
+    }
+
+    public static class TestA {
+        public String name;
     }
 
 }
